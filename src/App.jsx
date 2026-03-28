@@ -143,7 +143,7 @@ function ProjectModal({ project, onClose }) {
   return (
     <div onClick={onClose} style={{ position: 'fixed', inset: 0, zIndex: 300, background: 'rgba(0,0,0,0.92)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
       <div onClick={e => e.stopPropagation()} style={{ background: '#13132A', borderRadius: '24px', width: '100%', maxWidth: '700px', maxHeight: '90vh', overflow: 'auto', border: '1px solid rgba(93,63,211,0.3)' }}>
-        {project.thumbnail_url && <img src={project.thumbnail_url} alt={project.title} style={{ width: '100%', borderRadius: '24px 24px 0 0', objectFit: 'cover', maxHeight: '450px' }} />}
+        {project.thumbnail_url && <img src={project.thumbnail_url} alt={project.title} style={{ width: '100%', borderRadius: '24px 24px 0 0', objectFit: 'cover', maxHeight: '80vh' }} />}
         <div style={{ padding: '2rem' }}>
           <div style={{ fontFamily: "'Poppins', sans-serif", fontSize: '0.72rem', color: '#3DD9D6', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '0.5rem' }}>{project.category}</div>
           <h2 style={{ fontFamily: "'Sora', sans-serif", fontWeight: 700, fontSize: '1.5rem', color: '#fff', marginBottom: '1rem' }}>{project.title}</h2>
