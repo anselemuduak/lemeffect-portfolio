@@ -73,7 +73,7 @@ const [galleryFiles, setGalleryFiles] = useState([])
       }
     }
 
-    const { error } = await supabase.from('projects').insert([{
+    const { data: data2, error } = await supabase.from('projects').insert([{
       title: form.title,
       category: form.category,
       description: form.description,
@@ -83,13 +83,26 @@ const [galleryFiles, setGalleryFiles] = useState([])
       published: form.published,
       thumbnail_url: thumbnailUrl,
       media_url: mediaUrl,video_url: form.video_url || '',
-    }])
+    }]).select()
 
     setUploading(false)
     if (error) { setMsg(`Error: ${error.message}`); return }
     setMsg('✓ Project published.')
     setForm({ title: '', category: 'Graphic Design', description: '', concept: '', tags: '', featured: false, published: true })
     setMediaFile(null); setThumbFile(null)
+    if (galleryFiles.length > 0 && data2) {
+  const projectId = data2[0]?.id
+  for (let i = 0; i < galleryFiles.length; i++) {
+    const ext = galleryFiles[i].name.split('.').pop()
+    const path = `gallery/${Date.now()}-${i}.${ext}`
+    const { error: uploadError } = await supabase.storage.from('portfolio-media').upload(path, galleryFiles[i])
+    if (!uploadError) {
+      const { data: { publicUrl } } = supabase.storage.from('portfolio-media').getPublicUrl(path)
+      await supabase.from('project_images').insert([{ project_id: projectId, image_url: publicUrl, sort_order: i }])
+    }
+  }
+  setGalleryFiles([])
+}
     loadProjects()
     onRefresh()
     setTimeout(() => setMsg(''), 3000)
