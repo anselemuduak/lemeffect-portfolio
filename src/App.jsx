@@ -26,7 +26,7 @@ const GlobalStyle = () => (
   `}</style>
 )
 
-function Nav({ onAdminClick }) {
+function Nav() {
   const [scrolled, setScrolled] = useState(false)
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 40)
@@ -41,7 +41,6 @@ function Nav({ onAdminClick }) {
           <a key={l} href={`#${l.toLowerCase()}`} style={{ fontFamily: "'Poppins', sans-serif", fontSize: '0.85rem', fontWeight: 500, color: 'rgba(255,255,255,0.75)', textDecoration: 'none', letterSpacing: '0.05em', textTransform: 'uppercase' }}>{l}</a>
         ))}
         <a href="#contact" style={{ background: `linear-gradient(135deg, ${COLORS.purple}, ${COLORS.aqua})`, color: '#fff', padding: '10px 24px', borderRadius: '50px', fontFamily: "'Poppins', sans-serif", fontSize: '0.82rem', fontWeight: 600, textDecoration: 'none' }}>Hire Me</a>
-        <button onClick={onAdminClick} style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', color: 'rgba(255,255,255,0.4)', padding: '8px 16px', borderRadius: '6px', fontSize: '0.75rem', cursor: 'pointer', fontFamily: "'Poppins', sans-serif" }}>Admin</button>
       </div>
     </nav>
   )
@@ -259,7 +258,7 @@ export default function App() {
   return (
     <div>
       <GlobalStyle />
-      <Nav onAdminClick={() => setShowAdmin(true)} />
+      <Nav />
       <Hero />
       <About />
       <Services />
@@ -279,7 +278,6 @@ export default function App() {
       )}
       <Contact />
       <Footer />
-      {showAdmin && <AdminModal onClose={() => setShowAdmin(false)} session={session} onRefresh={fetchProjects} />}
     </div>
   )
 }
