@@ -18,6 +18,7 @@ export default function AdminModal({ onClose, session, onRefresh }) {
     concept: '', tags: '', featured: false, published: true,
   })
   const [mediaFile, setMediaFile] = useState(null)
+const [galleryFiles, setGalleryFiles] = useState([])
   const [thumbFile, setThumbFile] = useState(null)
   const [uploading, setUploading] = useState(false)
 
@@ -211,6 +212,9 @@ export default function AdminModal({ onClose, session, onRefresh }) {
                 <input type="file" accept="image/*" style={{ ...input, cursor: 'pointer' }} onChange={e => setThumbFile(e.target.files[0])} />
                 <label style={label}>Media File (image only)</label>
 <input type="file" accept="image/*" style={{ ...input, cursor: 'pointer' }} onChange={e => setMediaFile(e.target.files[0])} />
+                <label style={label}>Gallery Images (optional — multiple)</label>
+<input type="file" accept="image/*" multiple style={{ ...input, cursor: 'pointer' }} onChange={e => setGalleryFiles(Array.from(e.target.files))} />
+{galleryFiles.length > 0 && <p style={{ color: C.aqua, fontSize: '0.75rem', marginTop: '-0.5rem', marginBottom: '1rem' }}>{galleryFiles.length} image(s) selected</p>}
 
 <label style={label}>Video URL (YouTube — for Videography)</label>
 <input style={input} value={form.video_url || ''} onChange={e => setForm({ ...form, video_url: e.target.value })} placeholder="https://youtube.com/watch?v=..." />
