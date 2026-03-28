@@ -81,7 +81,7 @@ export default function AdminModal({ onClose, session, onRefresh }) {
       featured: form.featured,
       published: form.published,
       thumbnail_url: thumbnailUrl,
-      media_url: mediaUrl,
+      media_url: mediaUrl,video_url: form.video_url || '',
     }])
 
     setUploading(false)
