@@ -140,20 +140,47 @@ function Services() {
   )
 }
 function ProjectModal({ project, onClose }) {
+  const [gallery, setGallery] = useState([])
+  const [activeImg, setActiveImg] = useState(0)
+
+  useEffect(() => {
+    async function fetchGallery() {
+      const { data } = await supabase
+        .from('project_images')
+        .select('*')
+        .eq('project_id', project.id)
+        .order('sort_order')
+      if (data && data.length > 0) setGallery(data)
+    }
+    fetchGallery()
+  }, [project.id])
+
+  const images = gallery.length > 0
+    ? gallery.map(g => g.image_url)
+    : project.thumbnail_url ? [project.thumbnail_url] : []
+
   return (
     <div onClick={onClose} style={{ position: 'fixed', inset: 0, zIndex: 300, background: 'rgba(0,0,0,0.92)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
       <div onClick={e => e.stopPropagation()} style={{ background: '#13132A', borderRadius: '24px', width: '100%', maxWidth: '700px', maxHeight: '90vh', overflow: 'auto', border: '1px solid rgba(93,63,211,0.3)' }}>
+
+        {/* Video or Image */}
         {project.video_url ? (
-  <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, borderRadius: '24px 24px 0 0', overflow: 'hidden' }}>
-    <iframe
-      src={`https://www.youtube.com/embed/${project.video_url.split('v=')[1]?.split('&')[0] || project.video_url.split('/').pop()}`}
-      style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }}
-      allowFullScreen
-    />
-  </div>
-) : project.thumbnail_url ? (
-  <img src={project.thumbnail_url} alt={project.title} style={{ width: '100%', borderRadius: '24px 24px 0 0', objectFit: 'cover', maxHeight: '80vh' }} />
-) : null}
+          <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, borderRadius: '24px 24px 0 0', overflow: 'hidden' }}>
+            <iframe src={`https://www.youtube.com/embed/${project.video_url.split('v=')[1]?.split('&')[0] || project.video_url.split('/').pop()}`} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }} allowFullScreen />
+          </div>
+        ) : images.length > 0 ? (
+          <div>
+            <img src={images[activeImg]} alt={project.title} style={{ width: '100%', borderRadius: gallery.length > 1 ? '24px 24px 0 0' : '24px 24px 0 0', objectFit: 'cover', maxHeight: '80vh', display: 'block' }} />
+            {images.length > 1 && (
+              <div style={{ display: 'flex', gap: '8px', padding: '12px', overflowX: 'auto', background: 'rgba(0,0,0,0.3)' }}>
+                {images.map((img, i) => (
+                  <img key={i} src={img} alt="" onClick={() => setActiveImg(i)} style={{ width: '60px', height: '60px', objectFit: 'cover', borderRadius: '8px', cursor: 'pointer', border: activeImg === i ? '2px solid #3DD9D6' : '2px solid transparent', flexShrink: 0 }} />
+                ))}
+              </div>
+            )}
+          </div>
+        ) : null}
+
         <div style={{ padding: '2rem' }}>
           <div style={{ fontFamily: "'Poppins', sans-serif", fontSize: '0.72rem', color: '#3DD9D6', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '0.5rem' }}>{project.category}</div>
           <h2 style={{ fontFamily: "'Sora', sans-serif", fontWeight: 700, fontSize: '1.5rem', color: '#fff', marginBottom: '1rem' }}>{project.title}</h2>
