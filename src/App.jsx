@@ -145,7 +145,7 @@ function ProjectCard({ project, onClick }) {
   const catColors = { 'Graphic Design': COLORS.purple, 'Videography': COLORS.aqua, 'Photography': COLORS.yellow }
   const c = catColors[project.category] || COLORS.purple
   return (
-    <div onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} style={{ background: COLORS.darkCard, borderRadius: '20px', overflow: 'hidden', border: `1px solid ${hovered ? c+'50' : 'rgba(255,255,255,0.06)'}`, transition: 'all 0.35s ease', transform: hovered ? 'translateY(-6px)' : 'translateY(0)', cursor: 'pointer' }}>
+    <div onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}onClick={onClick} style={{ background: COLORS.darkCard, borderRadius: '20px', overflow: 'hidden', border: `1px solid ${hovered ? c+'50' : 'rgba(255,255,255,0.06)'}`, transition: 'all 0.35s ease', transform: hovered ? 'translateY(-6px)' : 'translateY(0)', cursor: 'pointer' }}>
       <div style={{ height: '220px', background: `linear-gradient(135deg, ${COLORS.purpleDark}50, ${c}20)`, position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         {project.thumbnail_url ? <img src={project.thumbnail_url} alt={project.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : <div style={{ fontSize: '3rem', color: `${c}40` }}>◈</div>}
         {project.featured && <div style={{ position: 'absolute', top: '12px', right: '12px', background: COLORS.yellow, color: COLORS.dark, fontFamily: "'Poppins', sans-serif", fontWeight: 700, fontSize: '0.65rem', padding: '4px 10px', borderRadius: '50px' }}>★ Featured</div>}
