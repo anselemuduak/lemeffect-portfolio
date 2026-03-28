@@ -209,9 +209,11 @@ export default function AdminModal({ onClose, session, onRefresh }) {
                 <textarea style={{ ...input, minHeight: '70px', resize: 'none' }} value={form.concept} onChange={e => setForm({ ...form, concept: e.target.value })} />
                 <label style={label}>Thumbnail Image</label>
                 <input type="file" accept="image/*" style={{ ...input, cursor: 'pointer' }} onChange={e => setThumbFile(e.target.files[0])} />
-                <label style={label}>Media File (image or video)</label>
-                <input type="file" accept="image/*,video/*" style={{ ...input, cursor: 'pointer' }} onChange={e => setMediaFile(e.target.files[0])} />
-                <label style={label}>Tags (comma-separated)</label>
+                <label style={label}>Media File (image only)</label>
+<input type="file" accept="image/*" style={{ ...input, cursor: 'pointer' }} onChange={e => setMediaFile(e.target.files[0])} />
+
+<label style={label}>Video URL (YouTube — for Videography)</label>
+<input style={input} value={form.video_url || ''} onChange={e => setForm({ ...form, video_url: e.target.value })} placeholder="https://youtube.com/watch?v=..." />
                 <input style={input} value={form.tags} onChange={e => setForm({ ...form, tags: e.target.value })} placeholder="Branding, Poster..." />
                 <label style={{ ...label, display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', marginBottom: '1.5rem' }}>
                   <input type="checkbox" checked={form.featured} onChange={e => setForm({ ...form, featured: e.target.checked })} style={{ accentColor: C.yellow }} />
