@@ -40,7 +40,7 @@ function Nav() {
         {['Work','About','Services','Contact'].map(l => (
           <a key={l} href={`#${l.toLowerCase()}`} style={{ fontFamily: "'Poppins', sans-serif", fontSize: '0.85rem', fontWeight: 500, color: 'rgba(255,255,255,0.75)', textDecoration: 'none', letterSpacing: '0.05em', textTransform: 'uppercase' }}>{l}</a>
         ))}
-        <a href="#contact" style={{ background: `linear-gradient(135deg, ${COLORS.purple}, ${COLORS.aqua})`, color: '#fff', padding: '10px 24px', borderRadius: '50px', fontFamily: "'Poppins', sans-serif", fontSize: '0.82rem', fontWeight: 600, textDecoration: 'none' }}>Hire Me</a>
+        <a href="#contact" style={{ background: `linear-gradient(135deg, ${COLORS.purple}, ${COLORS.aqua})`, color: '#fff', padding: '10px 24px', borderRadius: '50px', fontFamily: "'Poppins', sans-serif", fontSize: '0.82rem', fontWeight: 600, textDecoration: 'none' }}>Work With Us</a>
       </div>
     </nav>
   )
@@ -68,7 +68,7 @@ function Hero() {
         </p>
         <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap', animation: 'fadeUp 1s 0.6s ease both' }}>
           <a href="#work" style={{ background: `linear-gradient(135deg, ${COLORS.purple}, ${COLORS.purpleLight})`, color: '#fff', padding: '16px 36px', borderRadius: '50px', fontFamily: "'Poppins', sans-serif", fontWeight: 600, fontSize: '0.95rem', textDecoration: 'none', boxShadow: '0 8px 30px rgba(93,63,211,0.4)' }}>View Work</a>
-          <a href="#contact" style={{ background: 'transparent', color: COLORS.white, padding: '16px 36px', borderRadius: '50px', border: '1.5px solid rgba(255,255,255,0.25)', fontFamily: "'Poppins', sans-serif", fontWeight: 500, fontSize: '0.95rem', textDecoration: 'none' }}>Hire Me</a>
+          <a href="#contact" style={{ background: 'transparent', color: COLORS.white, padding: '16px 36px', borderRadius: '50px', border: '1.5px solid rgba(255,255,255,0.25)', fontFamily: "'Poppins', sans-serif", fontWeight: 500, fontSize: '0.95rem', textDecoration: 'none' }}>Work With Us</a>
         </div>
         <div style={{ display: 'flex', gap: '3rem', justifyContent: 'center', marginTop: '4rem', flexWrap: 'wrap', animation: 'fadeUp 1s 0.8s ease both' }}>
           {[['7+','Years in Design'],['3+','Years Videography'],['100%','Unapologetic Effect']].map(([num,label]) => (
