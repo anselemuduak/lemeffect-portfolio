@@ -250,7 +250,28 @@ function Portfolio({ projects, loading }) {
     </section>
   )
 }
-
+function Testimonials({ testimonials }) {
+  return (
+    <section style={{ padding: '8rem 5%', background: '#0D0D1A' }}>
+      <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+        <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+          <div style={{ fontFamily: "'Poppins', sans-serif", fontSize: '0.75rem', color: '#5D3FD3', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '1rem' }}>Social Proof</div>
+          <h2 style={{ fontFamily: "'Sora', sans-serif", fontWeight: 800, fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)', color: '#fff' }}>What clients say.</h2>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1.5rem' }}>
+          {testimonials.map((t, i) => (
+            <div key={i} style={{ background: '#13132A', borderRadius: '20px', padding: '2rem', border: '1px solid rgba(93,63,211,0.15)' }}>
+              <div style={{ color: '#FCD34D', fontSize: '1.2rem', marginBottom: '1rem' }}>★★★★★</div>
+              <p style={{ color: 'rgba(255,255,255,0.7)', lineHeight: 1.8, fontSize: '0.95rem', marginBottom: '1.5rem', fontStyle: 'italic' }}>"{t.text}"</p>
+              <div style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 600, color: '#3DD9D6', fontSize: '0.9rem' }}>— {t.name}</div>
+              {t.role && <div style={{ color: 'rgba(255,255,255,0.35)', fontSize: '0.75rem', marginTop: '4px' }}>{t.role}</div>}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
 function Contact() {
   const [form, setForm] = useState({ name: '', email: '', message: '' })
   const [sent, setSent] = useState(false)
@@ -295,7 +316,7 @@ function Footer() {
 }
 
 export default function App() {
-  const [projects, setProjects] = useState([])
+  const [projects, setProjects] = useState([])const [testimonials, setTestimonials] = useState([])
   const [showAdmin, setShowAdmin] = useState(false)
   const [session, setSession] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -306,13 +327,17 @@ export default function App() {
     return () => subscription.unsubscribe()
   }, [])
 
-  useEffect(() => { fetchProjects() }, [])
+  useEffect(() => { fetchProjects(); fetchTestimonials() }, [])
 
   async function fetchProjects() {
     const { data, error } = await supabase.from('projects').select('*').eq('published', true).order('created_at', { ascending: false })
     if (!error) setProjects(data || [])
     setLoading(false)
   }
+  async function fetchTestimonials() {
+  const { data, error } = await supabase.from('testimonials').select('*').order('created_at', { ascending: false })
+  if (!error) setTestimonials(data || [])
+}
 
   const featured = projects.filter(p => p.featured)
 
@@ -338,6 +363,7 @@ export default function App() {
         </section>
       )}
       <Contact />
+      {testimonials.length > 0 && <Testimonials testimonials={testimonials} />}
       <Footer />
     </div>
   )
