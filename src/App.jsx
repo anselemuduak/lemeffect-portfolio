@@ -140,7 +140,7 @@ function Services() {
   )
 }
 
-function ProjectCard({ project }) {
+function ProjectCard({ project, onClick }) {
   const [hovered, setHovered] = useState(false)
   const catColors = { 'Graphic Design': COLORS.purple, 'Videography': COLORS.aqua, 'Photography': COLORS.yellow }
   const c = catColors[project.category] || COLORS.purple
