@@ -316,7 +316,8 @@ function Footer() {
 }
 
 export default function App() {
-  const [projects, setProjects] = useState([])const [testimonials, setTestimonials] = useState([])
+  const [projects, setProjects] = useState([])
+    const [testimonials, setTestimonials] = useState([])
   const [showAdmin, setShowAdmin] = useState(false)
   const [session, setSession] = useState(null)
   const [loading, setLoading] = useState(true)
