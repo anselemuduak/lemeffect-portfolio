@@ -21,6 +21,8 @@ export default function AdminModal({ onClose, session, onRefresh }) {
 const [galleryFiles, setGalleryFiles] = useState([])
   const [thumbFile, setThumbFile] = useState(null)
   const [uploading, setUploading] = useState(false)
+  const [tForm, setTForm] = useState({ name: '', role: '', text: '' })
+const [tMsg, setTMsg] = useState('')
 
   const isAdmin = !!session
 
@@ -107,7 +109,19 @@ const [galleryFiles, setGalleryFiles] = useState([])
     onRefresh()
     setTimeout(() => setMsg(''), 3000)
   }
-
+async function handleAddTestimonial() {
+  if (!tForm.name || !tForm.text) { setTMsg('Name and message are required.'); return }
+  const { error } = await supabase.from('testimonials').insert([{
+    name: tForm.name,
+    role: tForm.role,
+    text: tForm.text,
+  }])
+  if (error) { setTMsg(`Error: ${error.message}`); return }
+  setTMsg('✓ Testimonial published.')
+  setTForm({ name: '', role: '', text: '' })
+  onRefresh()
+  setTimeout(() => setTMsg(''), 3000)
+}
   async function handleDelete(id) {
     await supabase.from('projects').delete().eq('id', id)
     loadProjects(); onRefresh()
@@ -173,7 +187,7 @@ const [galleryFiles, setGalleryFiles] = useState([])
         ) : (
           <div>
             <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '1rem' }}>
-              {['projects', 'add'].map(t => (
+              {['projects', 'add', 'testimonial'].map(t => (
                 <button key={t} onClick={() => { setTab(t); if (t === 'projects') loadProjects() }} style={{
                   background: 'none', border: 'none',
                   fontFamily: "'Poppins', sans-serif", fontWeight: 600, fontSize: '0.85rem',
@@ -182,7 +196,7 @@ const [galleryFiles, setGalleryFiles] = useState([])
                   borderBottom: tab === t ? `2px solid ${C.aqua}` : '2px solid transparent',
                   paddingBottom: '4px',
                 }}>
-                  {t === 'projects' ? `All Projects (${projects.length})` : '+ Add Project'}
+                  {t === 'projects' ? `All Projects (${projects.length})` : t === 'add' ? '+ Add Project' : '+ Testimonial'}
                 </button>
               ))}
             </div>
@@ -242,6 +256,20 @@ const [galleryFiles, setGalleryFiles] = useState([])
                 </button>
               </div>
             )}
+            {tab === 'testimonial' && (
+  <div>
+    <label style={label}>Client Name *</label>
+    <input style={input} value={tForm.name} onChange={e => setTForm({ ...tForm, name: e.target.value })} placeholder="e.g. Kemi Adeyemi" />
+    <label style={label}>Role / Company (optional)</label>
+    <input style={input} value={tForm.role} onChange={e => setTForm({ ...tForm, role: e.target.value })} placeholder="e.g. CEO, Kemi's Bakehouse" />
+    <label style={label}>What they said *</label>
+    <textarea style={{ ...input, minHeight: '100px', resize: 'none' }} value={tForm.text} onChange={e => setTForm({ ...tForm, text: e.target.value })} placeholder="Paste their exact words from WhatsApp..." />
+    {tMsg && <p style={{ color: tMsg.startsWith('✓') ? C.aqua : '#FF6B6B', fontSize: '0.82rem', marginBottom: '1rem' }}>{tMsg}</p>}
+    <button onClick={handleAddTestimonial} style={{ width: '100%', background: `linear-gradient(135deg, ${C.purple}, ${C.aqua})`, color: '#fff', border: 'none', padding: '14px', borderRadius: '50px', fontFamily: "'Poppins', sans-serif", fontWeight: 600, fontSize: '0.95rem', cursor: 'pointer' }}>
+      Publish Testimonial
+    </button>
+  </div>
+)}
           </div>
         )}
       </div>
