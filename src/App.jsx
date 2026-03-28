@@ -214,7 +214,7 @@ function Contact() {
             <textarea style={{ ...inputStyle, minHeight: '150px', resize: 'vertical' }} placeholder="Tell me about your project..." value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} />
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: '0.5rem' }}>
               <button onClick={handleSubmit} style={{ background: `linear-gradient(135deg, ${COLORS.purple}, ${COLORS.aqua})`, color: '#fff', border: 'none', padding: '16px 40px', borderRadius: '50px', fontFamily: "'Poppins', sans-serif", fontWeight: 600, fontSize: '0.95rem', cursor: 'pointer' }}>Send Message</button>
-              <a href="https://wa.me/2347137014327" target="_blank" rel="noreferrer" style={{ background: '#25D366', color: '#fff', padding: '16px 28px', borderRadius: '50px', fontFamily: "'Poppins', sans-serif", fontWeight: 600, fontSize: '0.9rem', textDecoration: 'none' }}>💬 WhatsApp</a>
+              <a href="https://wa.me/2348137014327" target="_blank" rel="noreferrer" style={{ background: '#25D366', color: '#fff', padding: '16px 28px', borderRadius: '50px', fontFamily: "'Poppins', sans-serif", fontWeight: 600, fontSize: '0.9rem', textDecoration: 'none' }}>💬 WhatsApp</a>
             </div>
           </div>
         )}
