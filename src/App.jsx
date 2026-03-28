@@ -161,11 +161,12 @@ function ProjectCard({ project }) {
 
 function Portfolio({ projects, loading }) {
   const [activeFilter, setActiveFilter] = useState('All')
+  const [selected, setSelected] = useState(null)
   const filters = ['All','Graphic Design','Videography','Photography']
   const filtered = activeFilter === 'All' ? projects : projects.filter(p => p.category === activeFilter)
   return (
     <section id="work" style={{ padding: '8rem 5%', background: COLORS.dark }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>{selected && <ProjectModal project={selected} onClose={() => setSelected(null)} />}
         <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
           <div style={{ fontFamily: "'Poppins', sans-serif", fontSize: '0.75rem', color: COLORS.aqua, letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '1rem' }}>Portfolio</div>
           <h2 style={{ fontFamily: "'Sora', sans-serif", fontWeight: 800, fontSize: 'clamp(2rem, 4vw, 3rem)', color: COLORS.white, letterSpacing: '-0.02em', marginBottom: '2rem' }}>Curated work.<br /><span style={{ color: COLORS.aqua }}>Real results.</span></h2>
@@ -182,7 +183,7 @@ function Portfolio({ projects, loading }) {
           </div>
         ) : (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.5rem' }}>
-            {filtered.map(p => <ProjectCard key={p.id} project={p} />)}
+            {filtered.map(p => <ProjectCard key={p.id} project={p} onClick={() => setSelected(p)} />)}
           </div>
         )}
       </div>
