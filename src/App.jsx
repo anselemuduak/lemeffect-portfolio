@@ -139,6 +139,29 @@ function Services() {
     </section>
   )
 }
+function ProjectModal({ project, onClose }) {
+  return (
+    <div onClick={onClose} style={{ position: 'fixed', inset: 0, zIndex: 300, background: 'rgba(0,0,0,0.92)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
+      <div onClick={e => e.stopPropagation()} style={{ background: '#13132A', borderRadius: '24px', width: '100%', maxWidth: '700px', maxHeight: '90vh', overflow: 'auto', border: '1px solid rgba(93,63,211,0.3)' }}>
+        {project.thumbnail_url && <img src={project.thumbnail_url} alt={project.title} style={{ width: '100%', borderRadius: '24px 24px 0 0', objectFit: 'cover', maxHeight: '450px' }} />}
+        <div style={{ padding: '2rem' }}>
+          <div style={{ fontFamily: "'Poppins', sans-serif", fontSize: '0.72rem', color: '#3DD9D6', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '0.5rem' }}>{project.category}</div>
+          <h2 style={{ fontFamily: "'Sora', sans-serif", fontWeight: 700, fontSize: '1.5rem', color: '#fff', marginBottom: '1rem' }}>{project.title}</h2>
+          <p style={{ color: 'rgba(255,255,255,0.7)', lineHeight: 1.8, marginBottom: '1rem', fontSize: '0.95rem' }}>{project.description}</p>
+          {project.concept && <p style={{ color: 'rgba(255,255,255,0.5)', lineHeight: 1.8, fontSize: '0.88rem', fontStyle: 'italic', borderLeft: '3px solid #5D3FD3', paddingLeft: '1rem' }}>{project.concept}</p>}
+          {project.tags && (
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '1.5rem' }}>
+              {(typeof project.tags === 'string' ? project.tags.split(',') : project.tags).map(tag => (
+                <span key={tag} style={{ background: 'rgba(93,63,211,0.15)', border: '1px solid rgba(93,63,211,0.3)', color: '#5D3FD3', padding: '4px 12px', borderRadius: '50px', fontSize: '0.72rem', fontFamily: "'Poppins', sans-serif" }}>{tag.trim()}</span>
+              ))}
+            </div>
+          )}
+          <button onClick={onClose} style={{ marginTop: '2rem', background: 'linear-gradient(135deg, #5D3FD3, #3DD9D6)', color: '#fff', border: 'none', padding: '12px 28px', borderRadius: '50px', fontFamily: "'Poppins', sans-serif", fontWeight: 600, fontSize: '0.88rem', cursor: 'pointer', width: '100%' }}>Close</button>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 function ProjectCard({ project, onClick }) {
   const [hovered, setHovered] = useState(false)
